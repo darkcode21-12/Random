@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Important Question 😏❤️</title>
+
+  <style>
+    * { box-sizing: border-box; font-family: 'Poppins', sans-serif; }
+    body {
+      margin: 0;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: linear-gradient(135deg, #ff758c, #ff7eb3);
+      overflow: hidden;
+    }
+
+    .card {
+      background: #fff;
+      padding: 2.5rem 2rem;
+      border-radius: 24px;
+      box-shadow: 0 15px 45px rgba(0,0,0,0.2);
+      text-align: center;
+      width: 90%;
+      max-width: 360px;
+      animation: pop 0.6s ease;
+      position: relative;
+    }
+
+    @keyframes pop {
+      from { transform: scale(0.8); opacity: 0; }
+      to { transform: scale(1); opacity: 1; }
+    }
+
+    h1 { font-size: 1.9rem; color: #ff4d6d; margin-bottom: .3rem; }
+    p { color: #555; margin: .6rem 0; }
+
+    .buttons { position: relative; height: 120px; }
+
+    button {
+      border: none;
+      padding: .9rem 1.8rem;
+      font-size: 1rem;
+      border-radius: 999px;
+      cursor: pointer;
+      transition: .2s ease;
+    }
+    .yes {
+      background: #38ef7d;
+      color: #fff;
+      box-shadow: 0 8px 18px rgba(0,0,0,.2);
+    }
+    .no {
+      background: #ffe066;
+      color: #333;
+      position: absolute;
+      left: 50%;
+      top: 60px;
+      transform: translateX(-50%);
+    }
+
+    .message {
+      margin-top: 1.2rem;
+      display: none;
+      font-size: 1.1rem;
+      color: #ff4d6d;
+      animation: fadeIn .5s ease forwards;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .heart { position: fixed; color: #ff4d6d; font-size: 20px; pointer-events: none; animation: float 4s linear forwards; }
+    @keyframes float {
+      from { transform: translateY(0) scale(1); opacity:1; }
+      to { transform: translateY(-100vh) scale(1.5); opacity:0; }
+    }
+  </style>
+</head>
+<body>
+
+  <div class="card">
+    <h1>Hey Cutie 😏💕</h1>
+    <p>Tell me the honest truth…</p>
+    <h2>Do you love me or what? 🥺👉👈</h2>
+
+    <div class="buttons">
+      <button class="yes" id="yesBtn">Yes 😍</button>
+      <button class="no" id="noBtn">No 🙃</button>
+    </div>
+
+    <div class="message" id="message">HA! I knew it 😌❤️ You’re officially stuck with me now 🥰</div>
+  </div>
+
+  <div id="hearts"></div>
+
+  <!-- 🎵 Background Music (online URL) -->
+  <audio id="bgMusic" loop>
+    <source src="https://cdn.pixabay.com/download/audio/2023/03/15/audio_3b60685c4a.mp3?filename=romantic-ambience-13718.mp3" type="audio/mpeg">
+  </audio>
+
+  <!-- 🎉 Sound Effects (online URLs) -->
+  <audio id="boingSound">
+    <source src="https://cdn.pixabay.com/download/audio/2022/03/04/audio_dbb35e499e.mp3?filename=cartoon-boing-109513.mp3" type="audio/mpeg">
+  </audio>
+  <audio id="yaySound">
+    <source src="https://cdn.pixabay.com/download/audio/2021/09/22/audio_5394ed5cf8.mp3?filename=happy-sound-effect-2-6341.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const noBtn = document.getElementById('noBtn');
+    const yesBtn = document.getElementById('yesBtn');
+    const message = document.getElementById('message');
+    const heartsContainer = document.getElementById('hearts');
+    const music = document.getElementById('bgMusic');
+    const boing = document.getElementById('boingSound');
+    const yay = document.getElementById('yaySound');
+
+    let teaseTexts = ['Nope 😜','Try again 😏','Almost 😆','Not today 😂','You wish 😝'];
+
+    noBtn.addEventListener('mouseenter', moveButton);
+    noBtn.addEventListener('click', moveButton);
+
+    function moveButton() {
+      const card = document.querySelector('.card');
+      const rect = card.getBoundingClientRect();
+      const x = Math.random() * (rect.width - noBtn.offsetWidth);
+      const y = Math.random() * (rect.height - noBtn.offsetHeight);
+
+      boing.currentTime = 0;
+      boing.play();
+
+      noBtn.style.left = `${x}px`;
+      noBtn.style.top = `${y}px`;
+      noBtn.textContent = teaseTexts[Math.floor(Math.random() * teaseTexts.length)];
+    }
+
+    yesBtn.addEventListener('click', () => {
+      music.play();
+      yay.play();
+      message.style.display = 'block';
+      spawnHearts(30);
+
+      setTimeout(() => {
+        document.body.innerHTML = `
+          <div style="display:flex;align-items:center;justify-content:center;height:100vh;background:linear-gradient(135deg,#ff758c,#ff7eb3);">
+            <div style="background:white;padding:2.5rem;border-radius:24px;text-align:center;box-shadow:0 20px 50px rgba(0,0,0,.25);max-width:360px;">
+              <h1 style="color:#ff4d6d;">Mission Complete 😌❤️</h1>
+              <p style="font-size:1.3rem;margin:.8rem 0;">You said YES 🥰</p>
+              <p style="font-weight:600;">Now send this screenshot to your boyfriend 📸❤️</p>
+              <p style="font-size:.9rem;color:#555;margin-top:.6rem;">(He’s waiting 😁)</p>
+            </div>
+          </div>`;
+      }, 2500);
+    });
+
+    function spawnHearts(amount) {
+      for (let i = 0; i < amount; i++) {
+        const h = document.createElement('div');
+        h.className = 'heart';
+        h.textContent = '❤️';
+        h.style.left = Math.random()*100 + 'vw';
+        h.style.animationDuration = (3 + Math.random()*2) + 's';
+        heartsContainer.appendChild(h);
+        setTimeout(() => h.remove(), 5000);
+      }
+    }
+  </script>
+
+</body>
+</html>
